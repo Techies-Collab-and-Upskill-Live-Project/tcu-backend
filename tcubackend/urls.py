@@ -49,10 +49,7 @@ urlpatterns = [
             [
                 path('auth/', include('customauth.urls')),
                 path("", include("emailer.urls")),
-                path("campaign_category/", include("campaign_category.urls")),
-                path("campaign/", include("campaign.urls")),
                 path("contactus/", include("contactus.urls")),
-                path("donations/", include("donations.urls")),
                 path('auth/login/', include('socialauth.urls')),
                 path("internship/", include("internship.urls")),
             ]

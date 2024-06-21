@@ -203,11 +203,8 @@ class UpdateProfileView(APIView):
                 return Response({'detail': e.detail}, status=status.HTTP_400_BAD_REQUEST)
 
 class DeleteUserView(APIView):
-    # permission_classes = [IsAuthenticated]
-    from django.views.decorators.csrf import csrf_exempt
+    permission_classes = [IsAuthenticated]
 
-
-    @csrf_exempt
     @extend_schema(tags=['User Profile'], summary='Delete user profile')
     def delete(self, request, *args, **kwargs):
         try:
