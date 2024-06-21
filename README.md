@@ -50,6 +50,12 @@ python3 manage.py makemigrations; python3 manage.py migrate
 python3 manage.py runserver
 ```
 
+or use a production command
+
+```bash
+gunicorn tcubackend.wsgi:application --workers=4
+```
+
 10. Implementing your features
     if you install a new packge, add to the requirements file using this
 
