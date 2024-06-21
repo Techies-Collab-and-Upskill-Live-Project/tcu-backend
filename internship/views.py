@@ -3,13 +3,18 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import RetrieveAPIView, ListAPIView, DestroyAPIView
 from drf_spectacular.utils import extend_schema
+from core.exception_handlers import ErrorEnum, ErrorResponse, response_schemas
 
 from .models import InternshipApplication
 from .serializers import InternshipApplicationSerializer
 
 class InternshipApplicationView(APIView):
+    serializer_class = InternshipApplicationSerializer
 
-    @extend_schema(tags=['Internship Application'], summary='Submit an internship application')
+    @extend_schema(
+            tags=['Internship Application'], summary='Submit an internship application',
+            description='This endpoint is used to submit internship application'
+        )
     def post(self, request, *args, **kwargs):
         serializer = InternshipApplicationSerializer(data=request.data)
         if serializer.is_valid():
@@ -22,16 +27,19 @@ class InternshipApplicationListView(ListAPIView):
     serializer_class = InternshipApplicationSerializer
 
     @extend_schema(tags=['Internship Application'], summary='List all internship applications')
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
-        total_applications = queryset.count()
-        response_data = {
-            "total_applications": total_applications,
-            "applications": serializer.data
-        }
-        return Response(response_data, status=status.HTTP_200_OK)
-
+    def get(self, request, *args, **kwargs):
+        try:
+            queryset = self.get_queryset()
+            serializer = self.get_serializer(queryset, many=True)
+            total_applications = queryset.count()
+            response_data = {
+                "total_applications": total_applications,
+                "applications": serializer.data
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
+        except Exception as e:
+            print("e", e)
+            return ErrorResponse(ErrorEnum.INTERNAL_SERVER_ERROR, e, response_schemas['500'])
 class InternshipApplicationDetailView(RetrieveAPIView):
     queryset = InternshipApplication.objects.all()
     serializer_class = InternshipApplicationSerializer

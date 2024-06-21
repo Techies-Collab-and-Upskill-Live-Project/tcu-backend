@@ -5,6 +5,7 @@ from django.conf import settings
 from django.shortcuts import redirect
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema
 from .mixins import PublicApiMixin, ApiErrorsMixin
 from .utils import google_get_access_token, google_get_user_info
 from customauth.models import CustomUser as User
@@ -27,6 +28,11 @@ class GoogleLoginApi(PublicApiMixin, ApiErrorsMixin, APIView):
         code = serializers.CharField(required=False)
         error = serializers.CharField(required=False)
 
+    @extend_schema(
+        tags=['Social Auth'],
+        summary='Google Login',
+        description='This endpoint is used to login/register a user using Google OAuth2.0'
+    )
     def get(self, request, *args, **kwargs):
         input_serializer = self.InputSerializer(data=request.GET)
         input_serializer.is_valid(raise_exception=True)
