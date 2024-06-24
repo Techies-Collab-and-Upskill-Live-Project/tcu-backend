@@ -184,7 +184,7 @@ SPECTACULAR_SETTINGS = {
 
 ALLOWED_HOSTS = ['*']
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:8000', 'http://localhost:3000', 'https://tcu-eoxz.vercel.app']
+CORS_ALLOWED_ORIGINS = ['http://localhost:8000', 'http://localhost:3000', 'http://localhost:5173', 'https://tcu-eoxz.vercel.app']
 
 CSRF_COOKIE_SECURE = False
 CSRF_COOKIE_HTTPONLY = False

@@ -3,7 +3,8 @@ from .views import (
     InternshipApplicationView,
     InternshipApplicationListView,
     InternshipApplicationDetailView,
-    InternshipApplicationDeleteView
+    InternshipApplicationDeleteView,
+    InternshipApplicationExportView
 )
 
 urlpatterns = [
@@ -11,4 +12,6 @@ urlpatterns = [
     path('applications/', InternshipApplicationListView.as_view(), name='internship-application-list'),
     path('applications/<uuid:pk>', InternshipApplicationDetailView.as_view(), name='internship-application-detail'),
     path('applications/delete/<uuid:pk>', InternshipApplicationDeleteView.as_view(), name='internship-application-delete'),
+    path('applications/export/', InternshipApplicationExportView.as_view(), name='internship-application-export'),
+
 ]
