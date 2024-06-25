@@ -4,7 +4,9 @@ from rest_framework.views import APIView
 from rest_framework.generics import RetrieveAPIView, ListAPIView, DestroyAPIView
 from django.http import HttpResponse
 from drf_spectacular.utils import extend_schema
-
+import cloudinary.uploader
+import logging
+import threading
 from core.exception_handlers import ErrorEnum, ErrorResponse, response_schemas
 
 from .models import InternshipApplication
@@ -12,6 +14,15 @@ from .serializers import InternshipApplicationSerializer
 
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
+
+def upload_certificate(application_id, certificate_content, certificate_name):
+    try:
+        upload_result = cloudinary.uploader.upload(certificate_content, resource_type="raw", public_id=certificate_name)
+        application = InternshipApplication.objects.get(id=application_id)
+        application.certificate = upload_result['url']
+        application.save()
+    except Exception as e:
+        logging.error(f"Failed to upload certificate: {e} for application id {application_id}")
 
 class InternshipApplicationView(APIView):
     serializer_class = InternshipApplicationSerializer
@@ -23,9 +34,17 @@ class InternshipApplicationView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = InternshipApplicationSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            application = serializer.save()
+            certificate = request.FILES.get('certificate', None)
+            if certificate:
+                certificate_content = certificate.read()
+                certificate_name = certificate.name
+                thread = threading.Thread(target=upload_certificate, args=(application.id, certificate_content, certificate_name))
+                thread.start()
             return Response({"detail": "Application submitted successfully."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 class InternshipApplicationListView(ListAPIView):
     queryset = InternshipApplication.objects.all()
@@ -44,7 +63,7 @@ class InternshipApplicationListView(ListAPIView):
             return Response(response_data, status=status.HTTP_200_OK)
         except Exception as e:
             print("e", e)
-            return ErrorResponse(ErrorEnum.INTERNAL_SERVER_ERROR, e, response_schemas['500'])
+            return ErrorResponse(ErrorEnum.ERR_003, e, response_schemas['500'])
 class InternshipApplicationDetailView(RetrieveAPIView):
     queryset = InternshipApplication.objects.all()
     serializer_class = InternshipApplicationSerializer

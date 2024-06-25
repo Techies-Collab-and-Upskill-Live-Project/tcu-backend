@@ -221,16 +221,16 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # Cloudinary
-# cloudinary.config(
-#     cloud_name=config("CLOUDINARY_CLOUD_NAME"),
-#     api_key=config("CLOUDINARY_API_KEY"),
-#     api_secret=config("CLOUDINARY_API_SECRET"),
-# )
+cloudinary.config(
+    cloud_name=config("CLOUDINARY_CLOUD_NAME"),
+    api_key=config("CLOUDINARY_API_KEY"),
+    api_secret=config("CLOUDINARY_API_SECRET"),
+)
 
 CLOUDINARY_STORAGE = {
-    'cloud_name': config('CLOUDINARY_CLOUD_NAME'),
-    'api_key': config('CLOUDINARY_API_KEY'),
-    'api_secret': config('CLOUDINARY_API_SECRET'),
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
 }
 
 # cloudinary.config(

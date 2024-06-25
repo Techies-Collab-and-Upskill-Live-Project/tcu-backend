@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import InternshipApplication
-import cloudinary.uploader
 
 class InternshipApplicationSerializer(serializers.ModelSerializer):
     certificate = serializers.FileField(required=False)
@@ -16,7 +15,5 @@ class InternshipApplicationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         certificate = validated_data.pop('certificate', None)
-        if certificate:
-            upload_result = cloudinary.uploader.upload(certificate, resource_type="raw")
-            validated_data['certificate'] = upload_result['url']
-        return super().create(validated_data)
+        application = super().create(validated_data)
+        return application
