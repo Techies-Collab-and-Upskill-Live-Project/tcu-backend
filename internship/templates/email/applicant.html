@@ -163,6 +163,49 @@
           text-align: center !important;
         }
       }
+     
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .header {
+            text-align: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .content {
+            padding: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px 0;
+            border-top: 1px solid #ddd;
+            margin-top: 20px;
+            color: #777;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    
     </style>
   </head>
 
@@ -761,21 +804,20 @@
                                       style="line-height: 19.6px"
                                     ></span
                                     ><span style="line-height: 19.6px"
-                                      >Hello {{ name }},
+                                      >Dear {{ name }},
                                     </span>
                                   </p>
                                   <p style="line-height: 140%"> </p>
-                                  <div>
-                                    <div>We received your enquiry</div>
-                                    <br />
-                                    <div>Stay tuned for an update shortly!</div>
-                                    <br />
-
-                                    <div>Best,</div>
-                                    <br />
-                                    <div>TCU</div>
-                                  </div>
-                                </div>
+                                  <div class="content">
+            <p>Thank you for applying for the internship position at TCU. We have received your application and our team is currently reviewing it.</p>
+            <p>Here are the details of your application:</p>
+            <br>
+            <p>If we need any further information from you, we will reach out via email. Otherwise, we will notify you about the status of your application as soon as possible.</p>
+            <br>
+            <p>In the meantime, if you have any questions, please feel free to contact us at <a href="mailto:webrin2005@gmail.com">Email</a> or visit our website.</p>
+            <br>
+            <a href="https://tcu-eoxz.vercel.app" class="button">Visit Our Website</a>
+        </div>
                               </td>
                             </tr>
                           </tbody>
@@ -1183,7 +1225,7 @@
                                             "
                                           >
                                             <a
-                                              href="https://twitter.com/unlayerapp"
+                                              href="https://x.com/tculive"
                                               title="Twitter"
                                               target="_blank"
                                             >
@@ -1244,7 +1286,7 @@
                                             "
                                           >
                                             <a
-                                              href="https://www.linkedin.com/company/unlayer/mycompany/"
+                                              href="https://www.linkedin.com/company/techies-collab-and-upskill-on-live-project/posts/?feedView=all"
                                               title="LinkedIn"
                                               target="_blank"
                                             >
