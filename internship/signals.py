@@ -8,7 +8,7 @@ def send_application_email(sender, instance, created, **kwargs):
     if created:
         # Context for the email templates
         context = {
-            'full_name': instance.full_name,
+            'name': instance.full_name,
             'message': instance.experience,
             'enquiry_type': instance.skill,
             'subject': 'We received your application',
@@ -17,7 +17,7 @@ def send_application_email(sender, instance, created, **kwargs):
 
         # Send email to the applicant
         applicant_subject = 'We received your application'
-        applicant_template = 'email/contact_sender.html'
+        applicant_template = 'email/applicant.html'
         send_email(
             subject=applicant_subject,
             recipient_list=[instance.email],
@@ -30,7 +30,10 @@ def send_application_email(sender, instance, created, **kwargs):
         admin_template = 'email/contact_admin.html'
         send_email(
             subject=admin_subject,
+            # recipient_list=['ogboyesam@gmail.com', 'clintonebuka75@gmail.com', 'webrin2005@gmail.com', 'atesunate150@gmail.com'],  # Replace with your admin email
             recipient_list=['ogboyesam@gmail.com'],  # Replace with your admin email
+
             context=context,
             template=admin_template
         )
+
