@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import InternshipApplication
+from .utils import format_date
 
 class InternshipApplicationSerializer(serializers.ModelSerializer):
     certificate = serializers.FileField(required=False)
@@ -17,3 +18,10 @@ class InternshipApplicationSerializer(serializers.ModelSerializer):
         certificate = validated_data.pop('certificate', None)
         application = super().create(validated_data)
         return application
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        birthdate = representation.get('birthdate')
+        if birthdate:
+            representation['birthdate'] = format_date(birthdate)
+        return representation

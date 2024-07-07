@@ -10,7 +10,7 @@ class InternshipApplication(BaseModel):
     skill = models.CharField(max_length=255)
     experience = models.TextField()
     about_skill = models.TextField()
-    certificate = models.FileField(upload_to='certificates/', blank=True, null=True)
+    certificate = models.FileField(upload_to='certificates/', max_length=500, blank=True, null=True)
     commitment = models.BooleanField()
     birthdate = models.DateField()
 

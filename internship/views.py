@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import RetrieveAPIView, ListAPIView, DestroyAPIView
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.http import HttpResponse
 from drf_spectacular.utils import extend_schema
 import cloudinary.uploader
@@ -14,6 +15,8 @@ from .serializers import InternshipApplicationSerializer
 
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
+
+logger = logging.getLogger(__name__)
 
 def upload_certificate(application_id, certificate_content, certificate_name):
     try:
@@ -49,6 +52,7 @@ class InternshipApplicationView(APIView):
 class InternshipApplicationListView(ListAPIView):
     queryset = InternshipApplication.objects.all()
     serializer_class = InternshipApplicationSerializer
+    # permission_classes = [IsAuthenticated, IsAdminUser]
 
     @extend_schema(tags=['Internship Application'], summary='List all internship applications')
     def get(self, request, *args, **kwargs):
@@ -60,9 +64,10 @@ class InternshipApplicationListView(ListAPIView):
                 "total_applications": total_applications,
                 "applications": serializer.data
             }
+            logging.info("All applications retrieved successfully")
             return Response(response_data, status=status.HTTP_200_OK)
         except Exception as e:
-            print("e", e)
+            logging.error("An error occured")
             return ErrorResponse(ErrorEnum.ERR_003, e, response_schemas['500'])
 class InternshipApplicationDetailView(RetrieveAPIView):
     queryset = InternshipApplication.objects.all()
@@ -70,11 +75,15 @@ class InternshipApplicationDetailView(RetrieveAPIView):
 
     @extend_schema(tags=['Internship Application'], summary='Retrieve an internship application by ID')
     def get(self, request, *args, **kwargs):
+        logging.info("Application retrieved successfully")
         return super().get(request, *args, **kwargs)
 
 class InternshipApplicationDeleteView(DestroyAPIView):
     queryset = InternshipApplication.objects.all()
     serializer_class = InternshipApplicationSerializer
+    # permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated]
+
 
     @extend_schema(tags=['Internship Application'], summary='Delete an internship application by ID')
     def delete(self, request, *args, **kwargs):
@@ -99,7 +108,7 @@ class InternshipApplicationExportView(APIView):
         # Define the headers
         headers = [
             'No', 'Email', 'Full Name', 'Twitter Handle', 'LinkedIn', 'Skill',
-            'Experience', 'About Skill', 'Certificate', 'Commitment', 'Birthdate'
+            'Experience', 'About Skill', 'Certificate', 'Commitment', 'Birthdate', 'Application Date'
         ]
 
         # Write the headers to the first row
@@ -121,6 +130,7 @@ class InternshipApplicationExportView(APIView):
             ws[f'I{row_num}'] = application.certificate.url if application.certificate else ''
             ws[f'J{row_num}'] = 'Yes' if application.commitment else 'No'
             ws[f'K{row_num}'] = application.birthdate
+            ws[f'L{row_num}'] = str(application.date_created)
 
         # Set the response content type to Excel
         response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
