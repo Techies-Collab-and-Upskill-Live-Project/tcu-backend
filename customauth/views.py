@@ -208,7 +208,6 @@ class DeleteUserView(APIView):
     @extend_schema(tags=['User Profile'], summary='Delete user profile')
     def delete(self, request, *args, **kwargs):
         try:
-                print("hello")
                 user = request.user
 
                 # Retrive the user profile if it exists
@@ -253,23 +252,16 @@ class ForgotPasswordView(APIView):
     def post(self, request, *args, **kwargs):
         email = request.data.get('email')
         if email:
-            user = CustomUser.objects.get(email=email)
-            print("user", user)
-            if user:
-                users_name = user.first_name 
+            try:
+                user = CustomUser.objects.get(email=email)
+                users_name = user.first_name
                 # Generate a unique token
                 token = RefreshToken.for_user(user)
                 # Set the token expiry time
                 token.set_exp(lifetime=datetime.timedelta(days=1))
                 # Get the metadata from where the request is coming from
-                # including device and IP address
-                try:
-                    user_agent = request.META.get('HTTP_USER_AGENT', None)
-                    ip_address = request.META.get('REMOTE_ADDR', None)
-                except AttributeError:
-                    print(AttributeError)
-                    user_agent = None
-                    ip_address = None
+                user_agent = request.META.get('HTTP_USER_AGENT', None)
+                ip_address = request.META.get('REMOTE_ADDR', None)
                 # Prepare the HTML content from the template
                 context = {'user': user, 'user_agent': user_agent, 'ip_address': ip_address, 'token': token, 'name': users_name}
                 # Send email using the existing backend
@@ -278,4 +270,6 @@ class ForgotPasswordView(APIView):
                 template = 'reset_password.html'
                 send_email(subject=subject, recipient_list=recipient_list, context=context, template=template)
                 return Response({'detail': 'Password reset link sent to your email'}, status=status.HTTP_200_OK)
-        return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+            except CustomUser.DoesNotExist:
+                return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'detail': 'Email field is required'}, status=status.HTTP_400_BAD_REQUEST)
