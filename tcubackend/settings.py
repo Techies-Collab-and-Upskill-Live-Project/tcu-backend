@@ -17,6 +17,8 @@ import cloudinary.uploader
 import cloudinary.api
 import os
 
+from core.logging.handlers import WebhookHandler
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -63,7 +65,8 @@ CUSTOM_APPS = [
     "emailer",
     'contactus',
     'socialauth',
-    'internship.apps.InternshipAppConfig'
+    'internship.apps.InternshipAppConfig',
+    'load_data'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
@@ -112,13 +115,23 @@ WSGI_APPLICATION = 'tcubackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -259,12 +272,18 @@ LOGGING = {
             "class": "logging.FileHandler",
             "filename": "general.log",
             "formatter": "verbose",
-            "level": config("DJANGO_LOG_LEVEL", "WARNING"),
+            "level": config("DJANGO_LOG_LEVEL", "INFO"),
+        },
+        "webhook": {
+            "()": WebhookHandler,
+            "formatter": "verbose",
+            "webhook_url": config('WEBHOOK_URL'),  # Your webhook URL
+            "level": "INFO",  # Send only ERROR and above logs to the webhook
         },
     },
     "loggers": {
         "": {  # The empty string indicates ~ All Apps including installed apps
-            "handlers": ["file"],
+            "handlers": ["file", "webhook"],  # Add the webhook handler
             "propagate": True,
         },
     },
