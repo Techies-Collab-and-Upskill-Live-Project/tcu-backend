@@ -21,6 +21,8 @@ slack_bot = SlackBot()
 @method_decorator(csrf_exempt, name='dispatch')
 class SlackEventsView(View):
 
+    @csrf_exempt
+    @require_POST
     def post(self, request, *args, **kwargs):
         try:
             form_data = request.POST
@@ -97,13 +99,3 @@ class SlackEventsView(View):
                 }
             })
         return {"blocks": blocks, "type": "home"}, text
-
-    # def send_message(self, user_id, blocks, text):
-    #     try:
-    #         response = client.chat_postMessage(
-    #             channel=user_id,
-    #             blocks=blocks,
-    #             text=text
-    #         )
-    #     except SlackApiError as e:
-    #         print(f"Error sending message: {e.response['error']}")

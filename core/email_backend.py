@@ -19,13 +19,16 @@ def send_email(
     message: str = None,
     context: dict = {},
     template: str = None,
+    bcc_list: list = None,
 ):
     email = EmailMultiAlternatives(
         subject=subject,
         body=message,
         from_email=settings.EMAIL_HOST_USER,
         to=[email for email in recipient_list],
+        bcc=bcc_list,  # Adding BCC support
     )
+
 
     if template:
         html_content = render_to_string(template, context)

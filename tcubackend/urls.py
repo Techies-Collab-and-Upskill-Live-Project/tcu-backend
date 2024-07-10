@@ -52,6 +52,7 @@ urlpatterns = [
                 path("contactus/", include("contactus.urls")),
                 path('auth/login/', include('socialauth.urls')),
                 path("internship/", include("internship.urls")),
+                path('slackbot/', include("slackbot.urls"))
             ]
         ),
     ),

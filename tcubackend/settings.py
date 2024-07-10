@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY=config('SECRET_KEY')
+SECRET_KEY=config('SECRET_KEY')
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'h3$9j3%^*63(=j-2(@col83qx#qmk%-8f$539dgi=&b&8mptq+'
+# SECRET_KEY = 'h3$9j3%^*63(=j-2(@col83qx#qmk%-8f$539dgi=&b&8mptq+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -66,7 +66,8 @@ CUSTOM_APPS = [
     'contactus',
     'socialauth',
     'internship.apps.InternshipAppConfig',
-    'load_data'
+    'load_data',
+    'slackbot'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
@@ -133,6 +134,28 @@ DATABASES = {
     }
 }
 
+# Environment
+ENVIRONMENT = config('ENVIRONMENT', 'development')
+
+# Database configurations
+if ENVIRONMENT == 'production':
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
+    }
+}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -201,6 +224,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://localhost:5174',
     'https://tcu-eoxz.vercel.app',
+    'https://www.tculive.com'
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
