@@ -617,20 +617,38 @@
                                         }
                                       </style> </span
                                     ><span style="line-height: 19.6px"
-                                      >Dear {{ name }},
+                                      >Hello Admin,
                                     </span>
                                   </p>
                                   <p style="line-height: 140%"> </p>
-                                  <div class="content">
-            <p>Thank you for applying for the internship position at TCU. We have received your application and our team is currently reviewing it.</p>
-            <p>Here are the details of your application:</p>
-            <br>
-            <p>If we need any further information from you, we will reach out via email. Otherwise, we will notify you about the status of your application as soon as possible.</p>
-            <br>
-            <p>In the meantime, if you have any questions, please feel free to contact us at <a href="mailto:tculiveprojects@gmail.com">Email</a> or visit our website.</p>
-            <br>
-            <a href="https://www.tculive.com" class="button">Visit Our Website</a>
-        </div>
+                                  <div>
+                                    <div class="content">
+                                      <p>
+                                        A new internship application has been
+                                        submitted. Below are the details of the
+                                        applicant:
+                                      </p>
+                                      <ul>
+                                        <li>
+                                          <strong>Name:</strong> {{ name }}
+                                        </li>
+                                        <li>
+                                          <strong>Email:</strong> {{ email }}
+                                        </li>
+                                        <li>
+                                          <strong>Skill:</strong> {{ skill }}
+                                        </li>
+                                      </ul>
+                                      <p>
+                                        Please review the application at your
+                                        earliest convenience.
+                                      </p>
+                                      <a
+                                        href={{ applicant_link }}
+                                        class="button"
+                                        >View Application</a
+                                      >
+                                    </div>
 
                                     <div>Best,</div>
                                     <br />
