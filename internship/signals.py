@@ -54,8 +54,8 @@ def send_application_to_slack(sender, instance, created, **kwargs):
         applicant_link = f'https://www.tculive.com/application/{instance.id}'
         message = (
             f"Hi Boss, we have a new Internship Application\n"
-            f"Full Name: Test\n"
-            f"Email: Test\n"
+            f"Full Name: {instance.full_name}\n"
+            f"Email: {instance.email}\n"
             f"Skill: {instance.skill}\n"
             f"Experience: {instance.experience}\n"
             f"More Details: {applicant_link}"

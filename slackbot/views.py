@@ -7,7 +7,6 @@ from django.views import View
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -21,8 +20,6 @@ slack_bot = SlackBot()
 @method_decorator(csrf_exempt, name='dispatch')
 class SlackEventsView(View):
 
-    @csrf_exempt
-    @require_POST
     def post(self, request, *args, **kwargs):
         try:
             form_data = request.POST
