@@ -112,6 +112,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tcubackend.wsgi.application'
 
+# settings.py
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 10
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
