@@ -57,17 +57,14 @@ class SlackBot:
             print(f"Error retrieving users: {e.response['error']}")
             return None
 
-    def send_message_to_user(self, user_id, text, blocks):
+    def send_message_to_user(self, user_id, text):
         def send_message():
-            print("blocks", blocks)
             try:
                 response = self.client.chat_postMessage(
                     channel=user_id,
-                    blocks=blocks,
                     text=text,
                 )
                 print("Message sent successfully")
-                print("response", response)
             except SlackApiError as e:
                 print(f"Error sending message to user: {e.response['error']}")
 

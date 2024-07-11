@@ -27,8 +27,8 @@ class SlackEventsView(View):
             if 'command' in form_data and form_data['command'] == '/getapplicants':
                 user_id = form_data['user_id']
                 response_data = self.handle_get_applications()
-                response_blocks, text = self.format_applications(response_data)
-                slack_bot.send_message_to_user(user_id, text, response_blocks)
+                text = self.format_applications(response_data)
+                slack_bot.send_message_to_user(user_id, text)
                 return JsonResponse({'status': 'ok'})
 
             # Handling URL verification challenge
@@ -54,45 +54,9 @@ class SlackEventsView(View):
         if isinstance(data, str):
             return [], data  # Return an empty list and the error message if it's a string
 
-        applications = data.get('applications', [])
+        # applications = data.get('applications', [])
         # blocks = []
-        text = f"Total Applications: {data['total_applications']}\n\n"
-        blocks = [
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": f"*Total Applications:* {data['total_applications']}"
-                }
-            }
-        ]
+        text = f"Good day boss. \nWe have {data['total_applications']} total applications currently\n\nKindly get them here: https://www.tculive.com/user\n\nThanks, \nTCU dev team"
+        
 
-        for app in applications:
-            text += (
-                f"Full Name: {app['full_name']}\n"
-                f"Email: {app['email']}\n"
-                f"Skill: {app['skill']} ({app['experience']})\n"
-                f"About Skill: {app['about_skill']}\n"
-                f"Twitter: {app['twitter_handle']}\n"
-                f"LinkedIn: {app['linkedin']}\n"
-                f"Commitment: {'Yes' if app['commitment'] else 'No'}\n"
-                f"Birthdate: {app['birthdate']}\n\n"
-            )
-            blocks.append({"type": "divider"})
-            blocks.append({
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": (
-                        f"*Full Name:* {app['full_name']}\n"
-                        f"*Email:* {app['email']}\n"
-                        f"*Skill:* {app['skill']} ({app['experience']})\n"
-                        f"*About Skill:* {app['about_skill']}\n"
-                        f"*Twitter:* {app['twitter_handle']}\n"
-                        f"*LinkedIn:* {app['linkedin']}\n"
-                        f"*Commitment:* {'Yes' if app['commitment'] else 'No'}\n"
-                        f"*Birthdate:* {app['birthdate']}"
-                    )
-                }
-            })
-        return {"blocks": blocks, "type": "home"}, text
+        return text
