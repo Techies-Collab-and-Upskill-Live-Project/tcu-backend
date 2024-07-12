@@ -45,11 +45,8 @@ def send_application_to_slack(sender, instance, created, **kwargs):
     if created:
 # Send Slack message to a channel
         slack_bot = SlackBot()
-        slack_channel_name = config("SLACK_DEV_CHANNEL_ID")  # Make sure to set this environment variable
-        # slack_channel_name = config("SLACK_CHANNEL_NAME")  # Make sure to set this environment variable
+        slack_channel_name = config("SLACK_DEV_CHANNEL_ID")  
         slack_channel_id = slack_bot.get_channel_id(slack_channel_name)
-        # slack_channel_id = slack_bot.get_user_by_email('clintonebuka75@gmail.com')
-
 
         applicant_link = f'https://www.tculive.com/application/{instance.id}'
         message = (
