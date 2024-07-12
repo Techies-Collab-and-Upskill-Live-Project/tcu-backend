@@ -63,7 +63,7 @@ CUSTOM_APPS = [
     'customauth.apps.UserAppConfig',
     "core",
     "emailer",
-    'contactus',
+    'contactus.apps.ContactUsAppConfig',
     'socialauth',
     'internship.apps.InternshipAppConfig',
     'load_data',

@@ -1,16 +1,12 @@
 from rest_framework import serializers
-
 from .models import ContactUs
-
 
 class ContactUsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactUs
-        fields = ["email", "name", "message", "enquiry_type", "subject"]
-
-    def create(self, validated_data):
-        return ContactUs.objects.create(**validated_data)
-
+        fields = ['id', 'email', 'name', 'message', 'enquiry_type', 'subject']
+        read_only_fields = ['id']
 
 class MessageSerializer(serializers.Serializer):
     detail = serializers.CharField()
+    statusCode = serializers.IntegerField()

@@ -1,6 +1,6 @@
 from emailer.email_backend import send_email
 from django.template.loader import render_to_string
-from rest_framework import status
+from rest_framework import status, mixins
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.views import APIView
@@ -12,8 +12,12 @@ from .models import ContactUs
 from .serializers import ContactUsSerializer, MessageSerializer
 from drf_spectacular.utils import extend_schema
 
-class ContactUsView(GenericViewSet):
+class ContactUsView(mixins.ListModelMixin,
+                    mixins.RetrieveModelMixin,
+                    mixins.DestroyModelMixin,
+                    GenericViewSet):
     serializer_class = ContactUsSerializer
+    queryset = ContactUs.objects.all()
 
     @response_schemas(
         response_model=MessageSerializer, code=201, schema_response_codes=[400]
@@ -35,36 +39,7 @@ class ContactUsView(GenericViewSet):
 
             serializer.is_valid(raise_exception=True)
 
-            # Retrieve the validated data before saving
-            validated_data = serializer.validated_data
-
             serializer.save()
-
-            # Send email to the contact
-            # Prepare the HTML content from the template
-            context = {
-                'name': validated_data['name'], 
-                'message': validated_data['message'],
-                'enquiry_type': validated_data['enquiry_type'],
-                'subject': validated_data['subject'],
-                'email': validated_data['email']
-                }
-            
-            # Send email to the person who submitted the form
-            subject = 'We received your enquiry'
-            recipient_list = [validated_data['email']]
-            template = 'email/contact_sender.html'
-
-            # Send email to Admin
-            subject_admin = 'New Enquiry'
-            admin_email = ['ogboyesam@gmail.com']
-            template_admin = 'email/contact_admin.html'
-
-            send_email(subject=subject, recipient_list=recipient_list, context=context, template=template)
-
-            # Admin
-            send_email(subject=subject_admin, recipient_list=admin_email, context=context, template=template_admin)
-
 
             return Response(
                 data={"detail": "Contact details received and email sent", "statusCode": 201},
@@ -73,3 +48,15 @@ class ContactUsView(GenericViewSet):
         except Exception as e:
             print("e", e)
             return ErrorResponse(ErrorEnum.INVALID_DATA, detail=str(e)).response()
+
+    @extend_schema(tags=['Contact Us'], summary='Get all Contact Messages')
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @extend_schema(tags=['Contact Us'], summary='Get a single Contact Message')
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+
+    @extend_schema(tags=['Contact Us'], summary='Delete a Contact Message')
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
