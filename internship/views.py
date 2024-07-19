@@ -35,7 +35,6 @@ class InternshipApplicationView(APIView):
             description='This endpoint is used to submit internship application'
         )
     def post(self, request, *args, **kwargs):
-        print("request.data", request.data)
         serializer = InternshipApplicationSerializer(data=request.data)
         if serializer.is_valid():
             application = serializer.save()

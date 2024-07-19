@@ -56,6 +56,7 @@ urlpatterns = [
             ]
         ),
     ),
+    path('', include("core.urls")),
 ]
 
 urlpatterns += [
