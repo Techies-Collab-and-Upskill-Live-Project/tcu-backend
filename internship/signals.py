@@ -1,5 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.dispatch import Signal
 from .models import InternshipApplication
 from core.email_backend import send_email
 from slackbot.utils import SlackBot
@@ -58,3 +59,23 @@ def send_application_to_slack(sender, instance, created, **kwargs):
             f"More Details: {applicant_link}"
         )
         slack_bot.send_message_to_channel(slack_channel_id, message)
+
+# Define a custom signal
+internship_application_submitted = Signal()
+
+@receiver(internship_application_submitted)
+def send_internship_application_email(sender, name, email, **kwargs):
+    # Your email sending logic here
+    context = {
+            'name': name,
+        }
+    send_acceptance_template = 'email/acceptance.html'
+    
+    send_email(
+        subject='Congratulations...TCU2.0',
+        recipient_list=[email],
+        context=context,
+        template=send_acceptance_template,
+        attachments=['ProjectTimelines.pdf', 'TermsAndConditions.pdf']
+    )
+    print(f"Sent email to {name} at {email}")

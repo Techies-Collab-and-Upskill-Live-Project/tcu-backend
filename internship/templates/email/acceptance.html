@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Thank You</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #e7e7e7;
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 5px;
+      }
+      .footer {
+        text-align: center;
+        padding: 10px 0;
+      }
+      .content {
+        padding: 20px 0;
+      }
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+      .button:hover {
+        background-color: #0056b3;
+      }
+      .social-icons img {
+        width: 32px;
+        height: 32px;
+        margin-right: 10px;
+      }
+      .footer-links {
+        color: #777;
+        text-align: center;
+      }
+      .footer-links a {
+        color: #777;
+        text-decoration: none;
+        margin: 0 10px;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #333;
+          color: #ffffff;
+        }
+        .container {
+          background-color: #444;
+        }
+        .footer {
+          background-color: #000; /* Keep black background for dark mode */
+        }
+        .footer-links a {
+          color: #ffffff;
+        }
+        .social-icons img {
+          filter: invert(1) hue-rotate(180deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <p>Hello {{ name }},</p>
+        <p>
+          We are delighted to inform you that you have been selected for the internship position at Techies Collab and Upskill.
+        </p>
+        <p>
+          We were impressed by your cover letter and we see potential in you. We believe that you will be successful in the technology industry which is why we are excited to have you as part of this cohort. We will provide further information on onboarding and expectations before your start date.
+        </p>
+         <p>
+          We’re looking forward to working directly with you and we believe we will build something awesome together. If you have any questions or concerns, please don’t hesitate to reach out to us.
+        </p>
+        <p>
+          You will receive an invitation to join the workspace.
+        </p>
+        <p>
+          <em>Attached are the documents containing the more details.</em>
+        </p>
+      </div>
+      <p>Best Regards,</p>
+      <p>Techies Collab and Upskil(TCU)</p>
+      <br>
+      <div class="footer">
+        <div class="social-icons">
+          <a href="https://x.com/tculive" target="_blank">
+            <img src="https://res.cloudinary.com/doc3jbqfc/image/upload/v1695283322/image-3_amgjlo.png" alt="Twitter" />
+          </a>
+          <a href="https://www.linkedin.com/company/techies-collab-and-upskill-on-live-project/" target="_blank">
+            <img src="https://res.cloudinary.com/doc3jbqfc/image/upload/v1695283363/image-5_gvsxcd.png" alt="LinkedIn" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -8,10 +8,12 @@ from drf_spectacular.utils import extend_schema
 import cloudinary.uploader
 import logging
 import threading
+import time
 from core.exception_handlers import ErrorEnum, ErrorResponse, response_schemas
 
 from .models import InternshipApplication
 from .serializers import InternshipApplicationSerializer
+from .signals import internship_application_submitted
 
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
@@ -52,7 +54,6 @@ class InternshipApplicationView(APIView):
 class InternshipApplicationListView(ListAPIView):
     queryset = InternshipApplication.objects.all()
     serializer_class = InternshipApplicationSerializer
-    # permission_classes = [IsAuthenticated, IsAdminUser]
 
     @extend_schema(tags=['Internship Application'], summary='List all internship applications')
     def get(self, request, *args, **kwargs):
@@ -81,7 +82,6 @@ class InternshipApplicationDetailView(RetrieveAPIView):
 class InternshipApplicationDeleteView(DestroyAPIView):
     queryset = InternshipApplication.objects.all()
     serializer_class = InternshipApplicationSerializer
-    # permission_classes = [IsAuthenticated, IsAdminUser]
     permission_classes = [IsAuthenticated]
 
 
@@ -140,3 +140,23 @@ class InternshipApplicationExportView(APIView):
         wb.save(response)
 
         return response
+
+class InternshipApplicationSendMailView(APIView):
+
+    @extend_schema(
+        tags=['Internship Application'],
+        summary='Send email to some Intern applications',
+        description='This endpoint sends an email to some Intern applications.',
+        responses={200: 'Email sent successfully'}
+    )
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        print("data", data)
+        recipients = data.get('recipients', [])
+        print("recipients", recipients)
+        
+        for recipient in recipients:
+            name = recipient.get('name')
+            email = recipient.get('email')
+            internship_application_submitted.send(sender=self.__class__, name=name, email=email)
+        return Response({'detail': 'Email sent successfully'}, status=status.HTTP_200_OK)
