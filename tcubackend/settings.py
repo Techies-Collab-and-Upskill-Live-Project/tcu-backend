@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 from decouple import config
 import cloudinary
 import cloudinary.uploader
@@ -245,8 +246,6 @@ GOOGLE_OAUTH2_CLIENT_SECRET = config('GOOGLE_OAUTH2_CLIENT_SECRET')
 BASE_FRONTEND_URL = config('BASE_FRONTEND_URL')
 
 CORS_ALLOW_CREDENTIALS = True
-
-from datetime import timedelta
 
 ACTIVATE_JWT = True
 SIMPLE_JWT = {

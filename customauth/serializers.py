@@ -1,16 +1,11 @@
 from django.contrib.auth import password_validation
 from .models import UserProfile
-from django.db.models import Sum
-
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
-from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserRegisterSerializer(serializers.ModelSerializer):
-    # first_name = serializers.CharField(max_length=50, required=True)
-    # last_name = serializers.CharField(max_length=50, required=True)
     email = serializers.EmailField(required=True)
     password = serializers.CharField(write_only=True, required=True)
 
@@ -27,8 +22,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         email = validated_data['email']
         password = validated_data['password']
-        # first_name = validated_data['first_name']
-        # last_name = validated_data['last_name']
 
         # Check if a user with the same email already exists
         existing_user = get_user_model().objects.filter(email=email).first()

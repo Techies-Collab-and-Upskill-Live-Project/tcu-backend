@@ -1,10 +1,7 @@
-import os
 import threading
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from decouple import config
-
-
 
 class SlackBot:
     def __init__(self):
@@ -64,7 +61,7 @@ class SlackBot:
                     channel=user_id,
                     text=text,
                 )
-                print("Message sent successfully")
+                print(f"Message sent successfully {response}")
             except SlackApiError as e:
                 print(f"Error sending message to user: {e.response['error']}")
 
@@ -77,6 +74,7 @@ class SlackBot:
                     channel=channel_id,
                     text=text
                 )
+                print(f"Message sent successfully {response}")
             except SlackApiError as e:
                 print(f"Error sending message to channel: {e.response['error']}")
 

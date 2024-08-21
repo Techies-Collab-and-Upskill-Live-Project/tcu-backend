@@ -15,7 +15,7 @@ class InternshipApplicationSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        certificate = validated_data.pop('certificate', None)
+        validated_data.pop('certificate', None)
         application = super().create(validated_data)
         return application
 

@@ -16,4 +16,5 @@ class WebhookHandler(logging.Handler):
             )
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
+            logging.error(f"Error in WebhookHandler: {e}")
             self.handleError(record)

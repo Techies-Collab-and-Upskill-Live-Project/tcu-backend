@@ -1,4 +1,4 @@
-from django.urls import path, re_path, include
+from django.urls import path
 from customauth.views import UserRegisterView,UserLoginView,UpdateProfileView,UserLogoutView,UserProfileView, PasswordResetView, DeleteUserView, ForgotPasswordView
 
 urlpatterns = [

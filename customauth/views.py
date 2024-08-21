@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken
+from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserLoginSerializer, UserProfileSerializer, UserProfileUpdateSerializer, UserRegisterSerializer
 from django.contrib.auth import authenticate
 from rest_framework.viewsets import GenericViewSet
@@ -75,7 +75,6 @@ class UserLoginView(GenericViewSet):
                 user_agent = request.META.get('HTTP_USER_AGENT', None)
                 ip_address = request.META.get('REMOTE_ADDR', None)
         except AttributeError:
-                print(AttributeError)
                 user_agent = None
                 ip_address = None
 
@@ -131,6 +130,7 @@ class UserLogoutView(GenericViewSet):
                     token.blacklist()
                 return Response({'detail': 'Logout successful'}, status=status.HTTP_200_OK)
             except Exception as e:
+                print("e", e)
                 return Response({'detail': 'Invalid refresh token'}, status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response({'detail': 'Both access and refresh tokens are required for logout'}, status=status.HTTP_400_BAD_REQUEST)

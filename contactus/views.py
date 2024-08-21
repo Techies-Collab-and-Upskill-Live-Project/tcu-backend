@@ -1,10 +1,6 @@
-from emailer.email_backend import send_email
-from django.template.loader import render_to_string
 from rest_framework import status, mixins
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.views import APIView
-from rest_framework.parsers import JSONParser
 
 from core.exception_handlers import ErrorEnum, ErrorResponse, response_schemas
 

@@ -1,18 +1,10 @@
-import os
 import json
-import requests
-from slack_sdk import WebClient
-from slack_sdk.errors import SlackApiError
 from django.views import View
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.response import Response
-from rest_framework import status
-
 from internship.models import InternshipApplication
 from internship.serializers import InternshipApplicationSerializer
-
 from .utils import SlackBot
 
 slack_bot = SlackBot()
