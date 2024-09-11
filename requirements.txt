@@ -6,9 +6,9 @@ cffi==1.16.0
 charset-normalizer==3.3.2
 click==8.1.7
 cloudinary==1.40.0
-cryptography==42.0.8
+cryptography==43.0.1
 dj-database-url==2.2.0
-Django==5.0.7
+Django==5.1.1
 django-anymail==10.3
 django-cloudinary-storage==0.3.0
 django-cors-headers==4.4.0
