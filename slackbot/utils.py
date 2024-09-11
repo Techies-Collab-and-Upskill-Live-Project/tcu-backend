@@ -13,7 +13,6 @@ class SlackBot:
             channels = result['channels']
             for channel in channels:
                 if channel['name'] == channel_name:
-                    print("id", channel['id'])
                     return channel['id']
             print("No id Found")
             return None

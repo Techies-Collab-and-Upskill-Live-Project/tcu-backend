@@ -23,8 +23,8 @@ def send_contact_emails(sender, instance, created, **kwargs):
         template = 'email/contact_sender.html'
         
         # Send email to Admin
-        admin_subject = 'New Internship Application'
-        admin_template = 'email/application_admin.html'
+        admin_subject = 'New Enquiry'
+        admin_template = 'email/contact_admin.html'
         admin_email = ['ogboyesam@gmail.com', 'tculiveprojects@gmail.com']
         
         send_email(subject=subject, recipient_list=recipient_list, context=context, template=template)
