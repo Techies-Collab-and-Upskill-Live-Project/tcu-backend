@@ -38,7 +38,7 @@ class ContactUsView(mixins.ListModelMixin,
             serializer.save()
 
             return Response(
-                data={"detail": "Contact details received and email sent", "statusCode": 201},
+                data={"detail": "Enquiry successfully sent. Please check your mail for update shortly", "statusCode": 201},
                 status=status.HTTP_201_CREATED,
             )
         except Exception as e:
