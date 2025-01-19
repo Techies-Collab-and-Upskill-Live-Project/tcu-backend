@@ -68,7 +68,8 @@ class InternshipApplicationListView(ListAPIView):
             return Response(response_data, status=status.HTTP_200_OK)
         except Exception as e:
             logging.error("An error occured")
-            return ErrorResponse(ErrorEnum.ERR_003, e, response_schemas['500'])
+            logging.error(e)
+            return ErrorResponse(ErrorEnum.ERR_003, e)
 class InternshipApplicationDetailView(RetrieveAPIView):
     queryset = InternshipApplication.objects.all()
     serializer_class = InternshipApplicationSerializer
