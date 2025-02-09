@@ -13,7 +13,7 @@ def send_application_email(sender, instance, created, **kwargs):
         # Context for the email templates
         context = {
             'name': instance.full_name,
-            'message': instance.experience,
+            'experience': instance.experience,
             'skill': instance.skill,
             'subject': 'We received your application',
             'email': instance.email,
