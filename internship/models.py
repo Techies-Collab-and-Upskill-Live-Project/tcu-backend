@@ -9,6 +9,7 @@ class InternshipApplication(BaseModel):
     linkedin = models.URLField(max_length=255)
     skill = models.CharField(max_length=255)
     experience = models.TextField()
+    github_link= models.URLField(max_length=255, default="")
     about_skill = models.TextField()
     certificate = models.FileField(upload_to='certificates/', max_length=500, blank=True, null=True)
     commitment = models.BooleanField()
