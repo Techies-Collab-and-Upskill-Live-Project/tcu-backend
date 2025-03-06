@@ -8,7 +8,7 @@ click==8.1.7
 cloudinary==1.40.0
 cryptography==43.0.1
 dj-database-url==2.2.0
-Django==5.1.5
+Django==5.1.7
 django-anymail==10.3
 django-cloudinary-storage==0.3.0
 django-cors-headers==4.4.0
