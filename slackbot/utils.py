@@ -60,7 +60,6 @@ class SlackBot:
                     channel=user_id,
                     text=text,
                 )
-                print(f"Message sent successfully {response}")
             except SlackApiError as e:
                 print(f"Error sending message to user: {e.response['error']}")
 
