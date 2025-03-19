@@ -46,8 +46,8 @@ class InternshipApplicationView(APIView):
                 thread = threading.Thread(target=upload_certificate, args=(application.id, certificate_content, certificate_name))
                 thread.start()
             return Response({"detail": "Application submitted successfully."}, status=status.HTTP_201_CREATED)
+        logging.error(f"Error eccountered during internship registration. \n\nData in-: {request.data}. \n\nError out-: {serializer.errors}\n--------------------\n")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class InternshipApplicationListView(ListAPIView):
