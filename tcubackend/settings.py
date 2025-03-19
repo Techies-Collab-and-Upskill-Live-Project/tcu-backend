@@ -289,7 +289,8 @@ LOGGING = {
     },
     "loggers": {
         "": {  # The empty string indicates ~ All Apps including installed apps
-            "handlers": ["file", "webhook"],  # Add the webhook handler
+            "handlers": ["console", "file", "webhook"],  # Add the webhook handler
+            "level": "DEBUG",
             "propagate": True,
         },
     },
