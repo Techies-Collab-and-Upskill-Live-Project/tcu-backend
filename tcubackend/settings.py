@@ -32,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY=config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', True)
 
 # Application definition
 DJANGO_APPS = [
@@ -280,16 +280,10 @@ LOGGING = {
             "formatter": "verbose",
             "level": config("DJANGO_LOG_LEVEL", "INFO"),
         },
-        "webhook": {
-            "()": WebhookHandler,
-            "formatter": "verbose",
-            "webhook_url": config('WEBHOOK_URL'),  # Your webhook URL
-            "level": "INFO",  # Send only ERROR and above logs to the webhook
-        },
     },
     "loggers": {
         "": {  # The empty string indicates ~ All Apps including installed apps
-            "handlers": ["console", "file", "webhook"],  # Add the webhook handler
+            "handlers": ["console", "file"],  # Add the webhook handler
             "level": "DEBUG",
             "propagate": True,
         },
@@ -308,3 +302,13 @@ LOGGING = {
         },
     },
 }
+
+# Add webhook handler only if environment is 'prod'
+if ENVIRONMENT == "production":
+    LOGGING["handlers"]["webhook"] = {
+        "()": WebhookHandler,
+        "formatter": "verbose",
+        "webhook_url": config("WEBHOOK_URL"),
+        "level": "ERROR",  # Send only ERROR and above logs to the webhook
+    }
+    LOGGING["loggers"][""]["handlers"].append("webhook")
