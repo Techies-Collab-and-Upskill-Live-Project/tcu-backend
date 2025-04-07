@@ -5,104 +5,217 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="x-apple-disable-message-reformatting" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Thank You</title>
+    <title>Congratulations on Your Selection!</title>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
       body {
         margin: 0;
         padding: 0;
-        background-color: #e7e7e7;
-        font-family: Arial, sans-serif;
+        background-color: #f5f7fa;
+        font-family: "Poppins", Arial, sans-serif;
         color: #333;
+        line-height: 1.6;
       }
       .container {
-        max-width: 500px;
-        margin: 0 auto;
+        max-width: 600px;
+        margin: 20px auto;
         background-color: #ffffff;
-        padding: 20px;
-        border-radius: 5px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       }
-      .footer {
+      .header {
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        padding: 30px 20px;
         text-align: center;
-        padding: 10px 0;
+        color: white;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 600;
+      }
+      .logo {
+        height: 60px;
+        margin-bottom: 15px;
       }
       .content {
-        padding: 20px 0;
+        padding: 30px;
+      }
+      .footer {
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        font-size: 14px;
+        color: #6c757d;
+      }
+      .button-container {
+        text-align: center;
+        margin: 30px 0;
       }
       .button {
         display: inline-block;
-        padding: 10px 20px;
-        margin-top: 20px;
-        font-size: 16px;
-        color: #fff;
-        background-color: #007bff;
-        border-radius: 5px;
+        padding: 12px 30px;
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        color: white !important;
         text-decoration: none;
+        border-radius: 50px;
+        font-weight: 500;
+        font-size: 16px;
+        box-shadow: 0 4px 15px rgba(110, 142, 251, 0.3);
+        transition: all 0.3s ease;
       }
       .button:hover {
-        background-color: #0056b3;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(110, 142, 251, 0.4);
+      }
+      .highlight-box {
+        background-color: #f8f5ff;
+        border-left: 4px solid #a777e3;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+      .social-icons {
+        margin: 20px 0;
+      }
+      .social-icons a {
+        display: inline-block;
+        margin: 0 10px;
+        transition: transform 0.3s ease;
+      }
+      .social-icons a:hover {
+        transform: scale(1.1);
       }
       .social-icons img {
-        width: 32px;
-        height: 32px;
-        margin-right: 10px;
+        width: 36px;
+        height: 36px;
       }
-      .footer-links {
-        color: #777;
-        text-align: center;
+      .divider {
+        height: 1px;
+        background: linear-gradient(to right, transparent, #ddd, transparent);
+        margin: 25px 0;
       }
-      .footer-links a {
-        color: #777;
-        text-decoration: none;
-        margin: 0 10px;
+      .signature {
+        font-style: italic;
+        color: #6c757d;
+      }
+      ul.steps {
+        padding-left: 20px;
+      }
+      ul.steps li {
+        margin-bottom: 10px;
+        position: relative;
+        padding-left: 30px;
+      }
+      ul.steps li:before {
+        content: "→";
+        color: #6e8efb;
+        position: absolute;
+        left: 0;
+        font-weight: bold;
       }
       @media (prefers-color-scheme: dark) {
         body {
-          background-color: #333;
-          color: #ffffff;
+          background-color: #1a1a1a;
+          color: #e0e0e0;
         }
         .container {
-          background-color: #444;
+          background-color: #2d2d2d;
+        }
+        .header {
+          background: linear-gradient(135deg, #4a6cf7, #8a5ae6);
         }
         .footer {
-          background-color: #000; /* Keep black background for dark mode */
+          background-color: #252525;
+          color: #b0b0b0;
         }
-        .footer-links a {
-          color: #ffffff;
+        .highlight-box {
+          background-color: #3a3a3a;
+          border-left-color: #8a5ae6;
         }
-        .social-icons img {
-          filter: invert(1) hue-rotate(180deg);
+        .divider {
+          background: linear-gradient(to right, transparent, #444, transparent);
         }
       }
     </style>
   </head>
   <body>
     <div class="container">
+      <div class="header">
+        <h1>Welcome to Cohort 3.0!</h1>
+        <p>We're thrilled to have you join us</p>
+      </div>
+
       <div class="content">
-        <p>Hello {{ name }},</p>
+        <p>Hello <strong>{{ name }}</strong>,</p>
+
         <p>
-          We are delighted to inform you that you have been selected for the
-          internship position at Techies Collab and Upskill.
+          Congratulations! After careful consideration, we're delighted to
+          inform you that you've been selected to join
+          <strong>Cohort 3.0</strong> of our internship program. This is an
+          exciting opportunity to grow, learn, and collaborate with like-minded
+          individuals.
         </p>
+
+        <div class="highlight-box">
+          <p>
+            <strong>Important documents attached:</strong> You'll find the
+            complete Cohort 3.0 Timeline and Terms & Conditions in the attached
+            document. Please review these carefully as they outline your
+            responsibilities and key program dates.
+          </p>
+        </div>
+
+        <h3>Your Next Steps:</h3>
+        <ul class="steps">
+          <li>
+            <strong>Join our WhatsApp group</strong> using the link below to
+            confirm your participation
+          </li>
+          <li>Review the attached documents thoroughly</li>
+          <li>
+            Prepare for team assignments (you'll receive these after joining)
+          </li>
+          <li>Engage with your fellow cohort members</li>
+        </ul>
+
+        <div class="button-container">
+          <a
+            href="https://chat.whatsapp.com/GSozXAb2rDY1t5S8xbon4q"
+            class="button"
+            >Join Cohort 3.0 WhatsApp Group</a
+          >
+        </div>
+
         <p>
-          We were impressed by your cover letter and we see potential in you. We
-          believe that you will be successful in the technology industry which
-          is why we are excited to have you as part of this cohort. We will
-          provide further information on onboarding and expectations before your
-          start date.
+          By joining the WhatsApp group, you're confirming your commitment to
+          fully participate in this internship experience. This platform will be
+          our primary communication channel for updates, team interactions, and
+          program announcements.
         </p>
+
+        <div class="divider"></div>
+
         <p>
-          We’re looking forward to working directly with you and we believe we
-          will build something awesome together. If you have any question or
-          concern, please don’t hesitate to reach out to us.
+          <strong>Note:</strong> If you have any questions or need clarification
+          about the program, don't hesitate to reach out to our team. We're here
+          to support you throughout this journey.
         </p>
-        <p>You will receive an invitation to join the workspace.</p>
+
         <p>
-          <em>Attached are the documents containing more details.</em>
+          We're incredibly excited to see the unique contributions you'll bring
+          to Cohort 3.0 and can't wait to get started!
+        </p>
+
+        <p class="signature">
+          Warm regards,<br />
+          <strong>The TCU Team</strong><br />
+          Techies Collab and Upskil
         </p>
       </div>
-      <p>Best Regards,</p>
-      <p>Techies Collab and Upskil(TCU)</p>
-      <br />
+
       <div class="footer">
         <div class="social-icons">
           <a href="https://x.com/tculive" target="_blank">
@@ -121,6 +234,7 @@
             />
           </a>
         </div>
+        <p>© 2025 Techies Collab and Upskil. All rights reserved.</p>
       </div>
     </div>
   </body>

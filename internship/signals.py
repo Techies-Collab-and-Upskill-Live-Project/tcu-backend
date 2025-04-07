@@ -72,7 +72,7 @@ def send_internship_application_email(sender, name, email, **kwargs):
     send_acceptance_template = 'email/acceptance.html'
     
     send_email(
-        subject='Congratulations...TCU3.0',
+        subject='Welcome to TCU Cohort 3.0 – Internship Onboarding Information',
         recipient_list=[email],
         context=context,
         template=send_acceptance_template,
