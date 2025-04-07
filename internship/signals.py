@@ -43,8 +43,8 @@ def send_application_email(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=InternshipApplication)
 def send_application_to_slack(sender, instance, created, **kwargs):
-    if created:
-# Send Slack message to a channel
+    if created and (config("ENVIRONMENT") == "production"):
+        # Send Slack message to a channel
         slack_bot = SlackBot()
         slack_channel_name = config("SLACK_DEV_CHANNEL_ID")  
         slack_channel_id = slack_bot.get_channel_id(slack_channel_name)
