@@ -3,7 +3,12 @@ from .models import InternshipApplication
 from .utils import format_date
 
 class InternshipApplicationSerializer(serializers.ModelSerializer):
-    certificate = serializers.FileField(required=False)
+    certificate = serializers.SerializerMethodField()
+
+    def get_certificate(self, obj):
+        if obj.certificate_url:
+            return obj.certificate_url
+        return None
 
     class Meta:
         model = InternshipApplication
