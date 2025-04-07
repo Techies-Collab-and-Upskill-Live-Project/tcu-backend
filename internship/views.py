@@ -159,6 +159,21 @@ class InternshipApplicationSendMailView(APIView):
     def post(self, request, *args, **kwargs):
         data = request.data
         recipients = data.get('recipients', [])
+
+        if not recipients:
+            return Response({'detail': 'No recipients provided'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if not isinstance(recipients, list):
+            return Response({'detail': 'Recipients must be a list'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if not all(isinstance(recipient, dict) and 'name' in recipient and 'email' in recipient for recipient in recipients):
+            return Response({'detail': 'Each recipient must be a dictionary with "name" and "email" keys'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if not all(isinstance(recipient['name'], str) and isinstance(recipient['email'], str) for recipient in recipients):
+            return Response({'detail': 'Name and email must be strings'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if not all('@' in recipient['email'] for recipient in recipients):
+            return Response({'detail': 'Email addresses must contain "@"'}, status=status.HTTP_400_BAD_REQUEST)
         
         for recipient in recipients:
             name = recipient.get('name')

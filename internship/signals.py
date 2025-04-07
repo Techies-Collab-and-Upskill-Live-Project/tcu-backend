@@ -72,10 +72,9 @@ def send_internship_application_email(sender, name, email, **kwargs):
     send_acceptance_template = 'email/acceptance.html'
     
     send_email(
-        subject='Congratulations...TCU2.0',
+        subject='Congratulations...TCU3.0',
         recipient_list=[email],
         context=context,
         template=send_acceptance_template,
-        attachments=['ProjectTimelines.pdf', 'TermsAndConditions.pdf']
+        attachments=['files/ProjectTimelines.pdf', 'files/TermsAndConditions.pdf']
     )
-    print(f"Sent email to {name} at {email}")
