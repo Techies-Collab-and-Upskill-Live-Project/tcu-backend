@@ -21,10 +21,17 @@ logger = logging.getLogger(__name__)
 
 def upload_certificate(application_id, certificate_content, certificate_name):
     try:
-        upload_result = cloudinary.uploader.upload(certificate_content, resource_type="raw", public_id=certificate_name)
+        upload_result = cloudinary.uploader.upload(
+            certificate_content,
+            resource_type="raw",
+            public_id=certificate_name,
+            folder=f"certificates/",
+            overwrite=True
+            )
         application = InternshipApplication.objects.get(id=application_id)
-        application.certificate = upload_result['url']
+        application.certificate = upload_result['secure_url']
         application.save()
+        logging.info(f"Certificate uploaded successfully: {upload_result['secure_url']}")
     except Exception as e:
         logging.error(f"Failed to upload certificate: {e} for application id {application_id}")
 
@@ -151,9 +158,7 @@ class InternshipApplicationSendMailView(APIView):
     )
     def post(self, request, *args, **kwargs):
         data = request.data
-        print("data", data)
         recipients = data.get('recipients', [])
-        print("recipients", recipients)
         
         for recipient in recipients:
             name = recipient.get('name')
