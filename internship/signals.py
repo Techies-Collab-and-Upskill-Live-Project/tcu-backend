@@ -6,6 +6,9 @@ from core.email_backend import send_email
 from slackbot.utils import SlackBot
 from decouple import config
 
+# Define a custom signal
+internship_application_accepted = Signal()
+internship_application_rejected = Signal()
 
 @receiver(post_save, sender=InternshipApplication)
 def send_application_email(sender, instance, created, **kwargs):
@@ -60,21 +63,25 @@ def send_application_to_slack(sender, instance, created, **kwargs):
         )
         slack_bot.send_message_to_channel(slack_channel_id, message)
 
-# Define a custom signal
-internship_application_submitted = Signal()
-
-@receiver(internship_application_submitted)
-def send_internship_application_email(sender, name, email, **kwargs):
-    # Your email sending logic here
-    context = {
-            'name': name,
-        }
-    send_acceptance_template = 'email/acceptance.html'
-    
+# Email handlers
+# @receiver(internship_application_accepted)
+def send_acceptance_email(sender, name, email, subject, template, attachments, **kwargs):
+    context = {'name': name}
     send_email(
-        subject='Welcome to TCU Cohort 3.0 – Internship Onboarding Information',
+        subject=subject,
         recipient_list=[email],
         context=context,
-        template=send_acceptance_template,
-        attachments=['files/ProjectTimelines.pdf', 'files/TermsAndConditions.pdf']
+        template=template,
+        attachments=attachments
+    )
+
+@receiver(internship_application_rejected)
+def send_rejection_email(sender, name, email, subject, template, attachments, **kwargs):
+    context = {'name': name}
+    send_email(
+        subject=subject,
+        recipient_list=[email],
+        context=context,
+        template=template,
+        attachments=attachments
     )

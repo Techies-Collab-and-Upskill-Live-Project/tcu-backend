@@ -5,7 +5,8 @@ from .views import (
     InternshipApplicationDetailView,
     InternshipApplicationDeleteView,
     InternshipApplicationExportView,
-    InternshipApplicationSendMailView
+    InternshipApplicationSendMailView,
+    InternshipApplicationRejectionMailView
 )
 
 urlpatterns = [
@@ -14,6 +15,6 @@ urlpatterns = [
     path('applications/<uuid:pk>', InternshipApplicationDetailView.as_view(), name='internship-application-detail'),
     path('applications/delete/<uuid:pk>', InternshipApplicationDeleteView.as_view(), name='internship-application-delete'),
     path('applications/export/', InternshipApplicationExportView.as_view(), name='internship-application-export'),
-    path('send-mail/', InternshipApplicationSendMailView.as_view(), name='internship-application-send-mail'),
-
+    path('send-mail/', InternshipApplicationSendMailView.as_view(), name='internship-application-send-acceptance-mail'),
+    path('send-rejection-mail/', InternshipApplicationRejectionMailView.as_view(), name='internship-application-send-rejection-mail'),
 ]
