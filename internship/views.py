@@ -99,6 +99,13 @@ class InternshipApplicationView(InternshipApplicationBaseView, APIView):
         description='This endpoint is used to submit internship application'
     )
     def post(self, request, *args, **kwargs):
+        # return that registration is closed
+        # Registration closed response
+        logging.info(f"Registration is closed: {request.data}")
+        return Response(
+            {"detail": "Registration is closed."}, 
+            status=status.HTTP_400_BAD_REQUEST
+        )
         serializer = self.serializer_class(data=request.data)
         if not serializer.is_valid():
             self.log_error(serializer.errors, request.data)
