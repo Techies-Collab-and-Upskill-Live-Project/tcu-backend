@@ -55,5 +55,5 @@ tomli==2.0.1
 treblle==0.14
 typing_extensions==4.12.2
 uritemplate==4.1.1
-urllib3==2.2.2
+urllib3==2.5.0
 whitenoise==6.7.0
